@@ -70,7 +70,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-# Database configuration (supports Render DATABASE_URL and local PostgreSQL)
+# Database configuration (supports Render / Neon DATABASE_URL and local PostgreSQL)
 database_url = os.getenv('DATABASE_URL')
 if database_url:
     DATABASES = {
@@ -157,3 +157,17 @@ else:
     ]
 CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', 'False').lower() in ('true', '1')
 CORS_ALLOW_CREDENTIALS = True
+
+# CSRF Trusted Origins (Supports Render & Netlify)
+csrf_origins_env = os.getenv('CSRF_TRUSTED_ORIGINS', '')
+if csrf_origins_env:
+    CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_origins_env.split(',') if origin.strip()]
+else:
+    CSRF_TRUSTED_ORIGINS = [
+        'http://localhost:5173',
+        'http://127.0.0.1:5173',
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+        'https://*.onrender.com',
+        'https://*.netlify.app',
+    ]

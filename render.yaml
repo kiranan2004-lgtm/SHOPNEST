@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: shopnest-backend
+    runtime: python
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: ./build.sh
+    startCommand: gunicorn backend.wsgi:application
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: shopnest-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "*"
+      - key: CORS_ALLOW_ALL_ORIGINS
+        value: "True"
+      - key: PYTHON_VERSION
+        value: 3.13.0
+
+databases:
+  - name: shopnest-db
+    databaseName: ecommerce
+    user: postgres
+    plan: free
+    region: oregon

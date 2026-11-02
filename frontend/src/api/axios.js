@@ -1,10 +1,18 @@
 import axios from 'axios';
 
 // Create central Axios instance with backend API baseURL
-// Reads from VITE_API_URL environment variable in production (e.g. Netlify),
+// Supports VITE_API_BASE_URL or VITE_API_URL in production (e.g. Netlify),
 // falling back to local Django development server (http://localhost:8000/api)
+const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+// Normalize: ensure it ends with /api if user passes base domain without /api
+const normalizedBaseUrl = rawBaseUrl.endsWith('/api')
+  ? rawBaseUrl
+  : rawBaseUrl.endsWith('/')
+  ? `${rawBaseUrl}api`
+  : `${rawBaseUrl}/api`;
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
+  baseURL: normalizedBaseUrl,
   headers: {
     'Content-Type': 'application/json',
   },
