@@ -1,4 +1,4 @@
-# SHOPNEST — Full-Stack E-Commerce Platform
+# SHOPNEST - Full-Stack E-Commerce Platform
 
 [![React](https://img.shields.io/badge/Frontend-React%2019-61dafb?style=flat&logo=react)](https://react.dev/)
 [![Django](https://img.shields.io/badge/Backend-Django%20REST%20Framework-092e20?style=flat&logo=django)](https://www.django-rest-framework.org/)
